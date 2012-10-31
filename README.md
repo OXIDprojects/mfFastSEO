@@ -1,21 +1,25 @@
-mfFastSEO
-=========
+# mfFastSEO
 
 Replaces OXIDs SEO-URL handling.
 
-Requirements
-------------
+## Requirements
 
-OXID-Version >= 4.6.0
+You need at least the OXID-Version 4.6.0.
+There are no additional requirements.
 
 
-Installation
-------------
+## Installation
 
+1. Copy the file into your `/path/to/modules/` directory.
+2. Patch the `.htaccess` file.
+3. Run the `install.sql` in yout favourite database management program (such as MySQLDumper or phpMyAdmin).
+4. Activate the module in OXID-Admin.
+
+### Patching the `.htaccess`
 Add the following lines to your .htaccess, after the line
 `RewriteRule oxseo\.php$ oxseo.php?mod_rewrite_module_is=on [L]`
 
-```.htaccess
+```htaccess
 RewriteCond %{REQUEST_URI} ^/([^/]*)/.*/?product-([^/]*)/category-([^/]*)\.html$
 RewriteRule \.html$ /index.php?cl=details&mfLang=%1&anid=%2&cnid=%3 [L]
 
