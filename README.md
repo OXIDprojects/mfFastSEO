@@ -47,10 +47,9 @@ Command-line for the MySQL Command-Line tool `mysql`:
 `mysql -h<DB-Host> -u<DB-User> -p<DB-Password> <Shop-Database> < modules/mfFastSEO/install/install.sql`
 
 ## TODO
-- Add an admin module to manage the SEO URLs.
- - *Features:*
-  - Generate SEO URLs for the products.
-  - Generate SEO URLs for the products in their categories.
-  - Generate SEO URLs for the categories.
-  - Geenrate all SEO URLs.
-  - Delete SEO URLs.
+- Add an admin module to manage the SEO URLs:
+ - Generate SEO URLs for the products.
+ - Generate SEO URLs for the products in their categories.
+ - Generate SEO URLs for the categories.
+ - Generate all SEO URLs.
+ - Delete SEO URLs.
