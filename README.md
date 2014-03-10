@@ -47,6 +47,7 @@ Command-line for the MySQL Command-Line tool `mysql`:
 `mysql -h<DB-Host> -u<DB-User> -p<DB-Password> <Shop-Database> < modules/mfFastSEO/install/install.sql`
 
 ## TODO
+- **IMPORTANT:** Support for paths in Shop-URL (e.g. http://www.example.com/path/to/shop/)
 - Add an admin module to manage the SEO URLs:
  - Generate SEO URLs for the products.
  - Generate SEO URLs for the products in their categories.
