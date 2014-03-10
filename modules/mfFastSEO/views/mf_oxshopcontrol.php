@@ -13,18 +13,15 @@
 class mf_oxshopcontrol extends mf_oxshopcontrol_parent
 {
     /**
-     * Main shop manager, that sets shop status, executes configuration methods.
-     * Executes oxShopControl::_runOnce(), if needed sets default class (according
-     * to admin or regular activities).
+     * Module initialization.
      *
-     * Session variables:
-     * <b>actshop</b>
+     * Overriding oxShopControl::start() method isn't possible if PHP strict standards are enabled.
      *
      * @return void
      */
-    public function start()
+    protected function _runOnce()
     {
-        // Sends the user with a request with a SEO url?
+        // The user used a SEO-URL request?
         if (isset($_REQUEST['mfLang'])) {
             $this->adjustRequestParams();
         }
@@ -32,7 +29,7 @@ class mf_oxshopcontrol extends mf_oxshopcontrol_parent
         $this->initAutoLoader();
         $this->initPDO();
 
-        parent::start();
+        parent::_runOnce();
     }
 
     /**
