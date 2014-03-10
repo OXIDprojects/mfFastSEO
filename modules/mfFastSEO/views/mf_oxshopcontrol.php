@@ -85,11 +85,30 @@ class mf_oxshopcontrol extends mf_oxshopcontrol_parent
     private function initPDO()
     {
         $oxidConfig = oxConfig::getInstance();
-        $dsn = sprintf(
-            'mysql:dbname=%s;host=%s',
-            $oxidConfig->getConfigParam('dbName'),
-            $oxidConfig->getConfigParam('dbHost')
+
+        $dbHost = $oxidConfig->getConfigParam('dbHost');
+
+        $colonPosition = strpos($dbHost, ':');
+        $colonExists = (false !== $colonPosition);
+        $slashPosition = strpos($dbHost, '/');
+        $slashExists = (false !== $slashPosition);
+
+        $connectionTarget = array(
+            '{NAME}' => 'host',
+            '{VALUE}' => $dbHost,
         );
+
+        if ($colonExists && $slashExists && $slashPosition > $colonPosition) {
+            $connectionTarget['{NAME}'] = 'unix_socket';
+            $connectionTarget['{VALUE}'] = substr($dbHost, $colonPosition + 1);
+        }
+
+        $dsn = sprintf(
+            'mysql:dbname=%s;{NAME}={VALUE}',
+            $oxidConfig->getConfigParam('dbName')
+        );
+
+        $dsn = strtr($dsn, $connectionTarget);
 
         $pdo = new PDO(
             $dsn,
