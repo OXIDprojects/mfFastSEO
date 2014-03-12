@@ -40,8 +40,16 @@ class mf_oxshopcontrol extends mf_oxshopcontrol_parent
     private function adjustRequestParams()
     {
         // We have to fetch the language ID, because we're using ISO-3166-1 codes instead of an internal ID.
-        $oxidLang           = oxLang::getInstance();
-        $newLanguageId      = array_search($_REQUEST['mfLang'], $oxidLang->getLanguageIds());
+        $oxidLang      = oxLang::getInstance();
+        $locale        = $_REQUEST['mfLang'];
+        $newLanguageId = array_search($locale, $oxidLang->getLanguageIds());
+
+        if (false === $newLanguageId) {
+            $cleanRequestUri = str_replace(dirname($_SERVER['SCRIPT_NAME']) . '/', '', $_SERVER['REQUEST_URI']);
+            $locale = substr($cleanRequestUri, 0, strpos($cleanRequestUri, '/'));
+            $newLanguageId = array_search($locale, $oxidLang->getLanguageIds());
+        }
+
         $availableLanguages = $oxidLang->getLanguageArray(null, true);
 
         // If the language is active, switch to them.
@@ -86,17 +94,17 @@ class mf_oxshopcontrol extends mf_oxshopcontrol_parent
         $dbHost = $oxidConfig->getConfigParam('dbHost');
 
         $colonPosition = strpos($dbHost, ':');
-        $colonExists = (false !== $colonPosition);
+        $colonExists   = (false !== $colonPosition);
         $slashPosition = strpos($dbHost, '/');
-        $slashExists = (false !== $slashPosition);
+        $slashExists   = (false !== $slashPosition);
 
         $connectionTarget = array(
-            '{NAME}' => 'host',
+            '{NAME}'  => 'host',
             '{VALUE}' => $dbHost,
         );
 
         if ($colonExists && $slashExists && $slashPosition > $colonPosition) {
-            $connectionTarget['{NAME}'] = 'unix_socket';
+            $connectionTarget['{NAME}']  = 'unix_socket';
             $connectionTarget['{VALUE}'] = substr($dbHost, $colonPosition + 1);
         }
 
