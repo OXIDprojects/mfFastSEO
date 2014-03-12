@@ -6,6 +6,10 @@ This OXID module replaces OXIDs SEO-URL handling.
 - Suffix for duplicate URLs is no longer required.
 - URLs are cached per request in a static property.
 
+## Changes
+- 12.03.2014: Fix for Shops in a sub-directory.
+  - The RewriteRules for patching .htaccess has been changed (removed '/' in front of "index.php").
+
 ## Requirements
 
 You need at least the OXID eShop version 4.6.0.<br>
@@ -47,7 +51,6 @@ Command-line for the MySQL Command-Line tool `mysql`:
 `mysql -h<DB-Host> -u<DB-User> -p<DB-Password> <Shop-Database> < modules/mfFastSEO/install/install.sql`
 
 ## TODO
-- **IMPORTANT:** Support for paths in Shop-URL (e.g. http://www.example.com/path/to/shop/)
 - Add an admin module to manage the SEO URLs:
  - Generate SEO URLs for the products.
  - Generate SEO URLs for the products in their categories.
